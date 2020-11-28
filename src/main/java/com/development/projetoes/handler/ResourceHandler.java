@@ -3,7 +3,9 @@ package com.development.projetoes.handler;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.development.projetoes.exception.CadastroUserEventoException;
 import com.development.projetoes.exception.EventoException;
+import com.development.projetoes.exception.UserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -33,8 +35,24 @@ public class ResourceHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 	}
 
+	@ExceptionHandler(UserException.class)
+	public ResponseEntity<Response<String>> handlerEventoException(UserException m) {
+		Response<String> response = new Response<>();
+		response.setStatusCode(m.getHttpStatus().value());
+		response.setData(m.getMessage());
+		return ResponseEntity.status(m.getHttpStatus()).body(response);
+	}
+
 	@ExceptionHandler(EventoException.class)
 	public ResponseEntity<Response<String>> handlerEventoException(EventoException m) {
+		Response<String> response = new Response<>();
+		response.setStatusCode(m.getHttpStatus().value());
+		response.setData(m.getMessage());
+		return ResponseEntity.status(m.getHttpStatus()).body(response);
+	}
+
+	@ExceptionHandler(CadastroUserEventoException.class)
+	public ResponseEntity<Response<String>> handlerEventoException(CadastroUserEventoException m) {
 		Response<String> response = new Response<>();
 		response.setStatusCode(m.getHttpStatus().value());
 		response.setData(m.getMessage());

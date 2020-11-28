@@ -9,5 +9,5 @@ create table tb_evento (
   	primary key(evento_id)
 );
 
-alter table tb_evento add constraint fk_evento_user
+alter table tb_evento add constraint fk_tb_evento_user
 foreign key (user_id) references tb_user (user_id);

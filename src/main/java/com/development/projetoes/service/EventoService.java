@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.development.projetoes.dto.EventoDto;
-import com.development.projetoes.entity.UserEntity;
 import com.development.projetoes.exception.EventoException;
 import com.development.projetoes.repository.IEventoRepository;
 import com.development.projetoes.repository.IUserRepository;

@@ -2,6 +2,7 @@ package com.development.projetoes.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -48,5 +49,8 @@ public class EventoEntity implements Serializable {
 	@JoinColumn(name="user_id")
 	@ManyToOne
 	private UserEntity user;
+
+	@OneToMany
+	private Set<CadastroUserEventoEntity> cadastros;
 
 }
