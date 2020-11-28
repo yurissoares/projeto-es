@@ -3,14 +3,12 @@ package com.development.projetoes.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.development.projetoes.controller.UserController;
 import com.development.projetoes.dto.UserDto;
 import com.development.projetoes.exception.UserException;
 import com.development.projetoes.repository.IUserRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

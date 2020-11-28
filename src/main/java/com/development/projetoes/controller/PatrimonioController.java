@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import com.development.projetoes.dto.PatrimonioDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.development.projetoes.constant.HyperLinkConstant;
 import com.development.projetoes.model.Response;
 import com.development.projetoes.service.IPatrimonioService;
 
@@ -46,12 +44,6 @@ public class PatrimonioController {
 		PatrimonioDto patrimonio = this.patrimonioService.consultar(patrimonioId);
 		response.setData(patrimonio);
 		response.setStatusCode(HttpStatus.OK.value());
-		response.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PatrimonioController.class).consultarPatrimonio(patrimonioId))
-				.withSelfRel());
-		response.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PatrimonioController.class).excluirPatrimonio(patrimonioId))
-				.withRel(HyperLinkConstant.EXCLUIR.getValor()));
-		response.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PatrimonioController.class).atualizarPatrimonio(patrimonio))
-				.withRel(HyperLinkConstant.ATUALIZAR.getValor()));
 		
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
@@ -62,8 +54,6 @@ public class PatrimonioController {
 		Response<Boolean> response = new Response<>();
 		response.setData(this.patrimonioService.cadastrar(patrimonio));
 		response.setStatusCode(HttpStatus.CREATED.value());
-		response.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PatrimonioController.class).listarPatrimonios())
-				.withRel(HyperLinkConstant.LISTAR.getValor()));
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
@@ -74,8 +64,6 @@ public class PatrimonioController {
 		Response<Boolean> response = new Response<>();
 		response.setData(this.patrimonioService.excluir(patrimonioId));
 		response.setStatusCode(HttpStatus.OK.value());
-		response.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PatrimonioController.class).listarPatrimonios())
-				.withRel(HyperLinkConstant.LISTAR.getValor()));
 		
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
@@ -86,8 +74,6 @@ public class PatrimonioController {
 		Response<Boolean> response = new Response<>();
 		response.setData(this.patrimonioService.atualizar(patrimonio));
 		response.setStatusCode(HttpStatus.OK.value());
-		response.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PatrimonioController.class).listarPatrimonios())
-				.withRel(HyperLinkConstant.LISTAR.getValor()));
 		
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}

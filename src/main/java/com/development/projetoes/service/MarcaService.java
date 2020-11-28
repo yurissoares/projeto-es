@@ -3,14 +3,12 @@ package com.development.projetoes.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.development.projetoes.controller.MarcaController;
 import com.development.projetoes.dto.MarcaDto;
 import com.development.projetoes.exception.MarcaException;
 import com.development.projetoes.repository.IMarcaRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -91,10 +89,7 @@ public class MarcaService implements IMarcaService {
 	public List<MarcaDto> listar() {
 		try {
 			List<MarcaDto> marcaDto = this.mapper.map(this.marcaRepository.findAll(), new TypeToken<List<MarcaDto>>() {}.getType());
-			marcaDto.forEach( marca -> marca.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder
-						.methodOn(MarcaController.class)
-						.consultarMarca(marca.getMarcaId()))
-						.withSelfRel()));
+
 			return marcaDto;
 		} catch (Exception e) {
 			throw new MarcaException(MENSAGEM_ERRO, HttpStatus.INTERNAL_SERVER_ERROR);

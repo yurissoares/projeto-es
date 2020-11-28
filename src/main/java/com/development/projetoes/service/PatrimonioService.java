@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-import com.development.projetoes.controller.PatrimonioController;
 import com.development.projetoes.dto.PatrimonioDto;
 import com.development.projetoes.exception.PatrimonioException;
 import com.development.projetoes.repository.IMarcaRepository;
@@ -12,7 +11,6 @@ import com.development.projetoes.repository.IPatrimonioRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -102,9 +100,7 @@ public class PatrimonioService implements IPatrimonioService {
 			List<PatrimonioDto> patrimonioDto = this.mapper.map(this.patrimonioRepository.findAll(),
 					new TypeToken<List<PatrimonioDto>>() {
 					}.getType());
-			patrimonioDto.forEach(patrimonio -> patrimonio
-					.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PatrimonioController.class)
-							.consultarPatrimonio(patrimonio.getPatrimonioId())).withSelfRel()));
+
 			return patrimonioDto;
 		} catch (Exception e) {
 			throw new PatrimonioException(MENSAGEM_ERRO, HttpStatus.INTERNAL_SERVER_ERROR);

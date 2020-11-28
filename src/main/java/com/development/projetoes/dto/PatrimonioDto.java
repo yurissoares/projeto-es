@@ -2,8 +2,6 @@ package com.development.projetoes.dto;
 
 import javax.validation.constraints.NotBlank;
 
-import org.springframework.hateoas.RepresentationModel;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -11,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
-public class PatrimonioDto extends RepresentationModel<PatrimonioDto> {
+public class PatrimonioDto {
 
 	private Long patrimonioId;
 	
