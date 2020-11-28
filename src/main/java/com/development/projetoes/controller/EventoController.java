@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.development.projetoes.dto.PatrimonioDto;
+import com.development.projetoes.dto.EventoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,63 +19,62 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.development.projetoes.model.Response;
-import com.development.projetoes.service.IPatrimonioService;
+import com.development.projetoes.service.IEventoService;
 
 @RestController
-@RequestMapping("/patrimonio")
-public class PatrimonioController {
+@RequestMapping("/evento")
+public class EventoController {
 
 	@Autowired
-	private IPatrimonioService patrimonioService;
+	private IEventoService eventoService;
 
 	@GetMapping
-	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<Response<List<PatrimonioDto>>> listarPatrimonios() {
-		Response<List<PatrimonioDto>> response = new Response<>();
-		response.setData(this.patrimonioService.listar());
+	//@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<Response<List<EventoDto>>> listarEventos() {
+		Response<List<EventoDto>> response = new Response<>();
+		response.setData(this.eventoService.listar());
 		response.setStatusCode(HttpStatus.OK.value());
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
-	@GetMapping("/{patrimonioId}")
-	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<Response<PatrimonioDto>> consultarPatrimonio(@PathVariable Long patrimonioId) {
-		Response<PatrimonioDto> response = new Response<>();
-		PatrimonioDto patrimonio = this.patrimonioService.consultar(patrimonioId);
-		response.setData(patrimonio);
+	@GetMapping("/{eventoId}")
+	//@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<Response<EventoDto>> consultarEvento(@PathVariable Long eventoId) {
+		Response<EventoDto> response = new Response<>();
+		EventoDto evento = this.eventoService.consultar(eventoId);
+		response.setData(evento);
 		response.setStatusCode(HttpStatus.OK.value());
 		
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
 	@PostMapping
-	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<Response<Boolean>> cadastrarPatrimonio(@Valid @RequestBody PatrimonioDto patrimonio) {
+	//@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<Response<Boolean>> cadastrarEvento(@Valid @RequestBody EventoDto evento) {
 		Response<Boolean> response = new Response<>();
-		response.setData(this.patrimonioService.cadastrar(patrimonio));
+		response.setData(this.eventoService.cadastrar(evento));
 		response.setStatusCode(HttpStatus.CREATED.value());
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 
-	@DeleteMapping("/{patrimonioId}")
-	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<Response<Boolean>> excluirPatrimonio(@PathVariable Long patrimonioId) {
+	@DeleteMapping("/{eventoId}")
+	//@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<Response<Boolean>> excluirEvento(@PathVariable Long eventoId) {
 		Response<Boolean> response = new Response<>();
-		response.setData(this.patrimonioService.excluir(patrimonioId));
+		response.setData(this.eventoService.excluir(eventoId));
 		response.setStatusCode(HttpStatus.OK.value());
 		
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
 	@PutMapping
-	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<Response<Boolean>> atualizarPatrimonio(@Valid @RequestBody PatrimonioDto patrimonio) {
+	//@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<Response<Boolean>> atualizarEvento(@Valid @RequestBody EventoDto evento) {
 		Response<Boolean> response = new Response<>();
-		response.setData(this.patrimonioService.atualizar(patrimonio));
+		response.setData(this.eventoService.atualizar(evento));
 		response.setStatusCode(HttpStatus.OK.value());
 		
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
-	
 }

@@ -3,8 +3,7 @@ package com.development.projetoes.handler;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.development.projetoes.exception.MarcaException;
-import com.development.projetoes.exception.PatrimonioException;
+import com.development.projetoes.exception.EventoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -34,19 +33,12 @@ public class ResourceHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 	}
 
-	@ExceptionHandler(MarcaException.class)
-	public ResponseEntity<Response<String>> handlerMarcaException(MarcaException m) {
+	@ExceptionHandler(EventoException.class)
+	public ResponseEntity<Response<String>> handlerEventoException(EventoException m) {
 		Response<String> response = new Response<>();
 		response.setStatusCode(m.getHttpStatus().value());
 		response.setData(m.getMessage());
 		return ResponseEntity.status(m.getHttpStatus()).body(response);
 	}
-	
-	@ExceptionHandler(PatrimonioException.class)
-	public ResponseEntity<Response<String>> handlerPatrimonioException(PatrimonioException m) {
-		Response<String> response = new Response<>();
-		response.setStatusCode(m.getHttpStatus().value());
-		response.setData(m.getMessage());
-		return ResponseEntity.status(m.getHttpStatus()).body(response);
-	}
+
 }

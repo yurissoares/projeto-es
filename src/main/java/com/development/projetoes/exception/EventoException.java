@@ -5,13 +5,13 @@ import org.springframework.http.HttpStatus;
 import lombok.Getter;
 
 @Getter
-public class PatrimonioException extends RuntimeException {
-
-	private static final long serialVersionUID = 1458985307290388939L;
-
+public class EventoException extends RuntimeException {
+	
+	private static final long serialVersionUID = 5584796611141683251L;
+	
 	private final HttpStatus httpStatus;
-
-	public PatrimonioException(final String mensagem, final HttpStatus httpStatus) {
+	
+	public EventoException(final String mensagem, final HttpStatus httpStatus) {
 		super(mensagem);
 		this.httpStatus = httpStatus;
 	}
