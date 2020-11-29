@@ -29,7 +29,7 @@ public class UserController {
 	private IUserService userService;
 
 	@GetMapping
-	@PreAuthorize("hasRole('USER')")
+//	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<Response<List<UserDto>>> listarUsers() {
 		Response<List<UserDto>> response = new Response<>();
 		response.setData(this.userService.listar());
@@ -38,7 +38,7 @@ public class UserController {
 	}
 
 	@GetMapping("/{userId}")
-	@PreAuthorize("hasRole('USER')")
+//	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<Response<UserDto>> consultarUser(@PathVariable Long userId) {
 		Response<UserDto> response = new Response<>();
 		UserDto user = this.userService.consultar(userId);
@@ -58,7 +58,7 @@ public class UserController {
 	}
 
 	@DeleteMapping("/{userId}")
-	@PreAuthorize("hasRole('ADMIN')")
+//	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Response<Boolean>> excluirUser(@PathVariable Long userId) {
 		Response<Boolean> response = new Response<>();
 		response.setData(this.userService.excluir(userId));
@@ -67,13 +67,13 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
-	@PutMapping
-	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<Response<Boolean>> atualizarUser(@Valid @RequestBody UserDto user) {
-		Response<Boolean> response = new Response<>();
-		response.setData(this.userService.atualizar(user));
-		response.setStatusCode(HttpStatus.OK.value());
-		
-		return ResponseEntity.status(HttpStatus.OK).body(response);
-	}
+//	@PutMapping
+//	@PreAuthorize("hasRole('USER')")
+//	public ResponseEntity<Response<Boolean>> atualizarUser(@Valid @RequestBody UserDto user) {
+//		Response<Boolean> response = new Response<>();
+//		response.setData(this.userService.atualizar(user));
+//		response.setStatusCode(HttpStatus.OK.value());
+//
+//		return ResponseEntity.status(HttpStatus.OK).body(response);
+//	}
 }

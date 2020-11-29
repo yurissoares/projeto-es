@@ -50,29 +50,29 @@ public class EventoService implements IEventoService {
 		}
 	}
 
-	@Override
-	public Boolean atualizar(EventoDto evento) {
-		try {
-			this.consultar(evento.getEventoId());
-			this.verificaSeUserExiste(evento.getUser().getUserId());
-			this.verificarSeUserEhAdm(evento.getUser().getUserId());
-			
-			Optional<EventoEntity> eventoOptional = this.eventoRepository.findByNome(evento.getNome());
-			if(eventoOptional.isPresent()) {
-				if(eventoOptional.get().getEventoId() != evento.getEventoId()) {
-					throw new EventoException("Esse nome de evento já existe.", HttpStatus.BAD_REQUEST);
-				}
-			}
-			
-			EventoEntity eventoEntityAtualizada = this.mapper.map(evento, EventoEntity.class);
-			this.eventoRepository.save(eventoEntityAtualizada);
-			return Boolean.TRUE;
-		} catch (EventoException m) {
-			throw m;
-		} catch (Exception e) {
-			throw e;
-		}
-	}
+//	@Override
+//	public Boolean atualizar(EventoDto evento) {
+//		try {
+//			this.consultar(evento.getEventoId());
+//			this.verificaSeUserExiste(evento.getUser().getUserId());
+//			this.verificarSeUserEhAdm(evento.getUser().getUserId());
+//
+//			Optional<EventoEntity> eventoOptional = this.eventoRepository.findByNome(evento.getNome());
+//			if(eventoOptional.isPresent()) {
+//				if(eventoOptional.get().getEventoId() != evento.getEventoId()) {
+//					throw new EventoException("Esse nome de evento já existe.", HttpStatus.BAD_REQUEST);
+//				}
+//			}
+//
+//			EventoEntity eventoEntityAtualizada = this.mapper.map(evento, EventoEntity.class);
+//			this.eventoRepository.save(eventoEntityAtualizada);
+//			return Boolean.TRUE;
+//		} catch (EventoException m) {
+//			throw m;
+//		} catch (Exception e) {
+//			throw e;
+//		}
+//	}
 
 	@Override
 	public Boolean excluir(Long eventoId) {

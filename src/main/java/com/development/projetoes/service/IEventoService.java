@@ -6,7 +6,7 @@ import com.development.projetoes.dto.EventoDto;
 
 public interface IEventoService {
 
-	public Boolean atualizar(final EventoDto evento);
+//	public Boolean atualizar(final EventoDto evento);
 
 	public Boolean excluir(final Long eventoId);
 
