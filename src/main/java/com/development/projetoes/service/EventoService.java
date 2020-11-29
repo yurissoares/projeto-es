@@ -44,20 +44,25 @@ public class EventoService implements IEventoService {
 		}
 	}
 
+	private void verificaSeUserExiste(Long userId) {
+		if(!this.userRepository.findById(userId).isPresent()) {
+			throw new EventoException("User não existe.", HttpStatus.BAD_REQUEST);
+		}
+	}
+
 	@Override
 	public Boolean atualizar(EventoDto evento) {
 		try {
 			this.consultar(evento.getEventoId());
+			this.verificaSeUserExiste(evento.getUser().getUserId());
+			this.verificarSeUserEhAdm(evento.getUser().getUserId());
 			
 			Optional<EventoEntity> eventoOptional = this.eventoRepository.findByNome(evento.getNome());
-			
 			if(eventoOptional.isPresent()) {
 				if(eventoOptional.get().getEventoId() != evento.getEventoId()) {
-					throw new EventoException("Esse nome de evento já existe.", HttpStatus.BAD_REQUEST);				
+					throw new EventoException("Esse nome de evento já existe.", HttpStatus.BAD_REQUEST);
 				}
 			}
-
-			this.verificarSeUserEhAdm(evento.getUser().getUserId());
 			
 			EventoEntity eventoEntityAtualizada = this.mapper.map(evento, EventoEntity.class);
 			this.eventoRepository.save(eventoEntityAtualizada);
@@ -112,6 +117,7 @@ public class EventoService implements IEventoService {
 	public Boolean cadastrar(EventoDto evento) {
 		try {
 			this.verificarNomeExistente(evento.getNome());
+			this.verificaSeUserExiste(evento.getUser().getUserId());
 			this.verificarSeUserEhAdm(evento.getUser().getUserId());
 
 			EventoEntity eventoEntity = this.mapper.map(evento, EventoEntity.class);
