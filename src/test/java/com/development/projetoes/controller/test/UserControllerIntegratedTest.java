@@ -28,8 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -94,42 +93,81 @@ public class UserControllerIntegratedTest {
         assertEquals(200, users.getBody().getStatusCode());
     }
 
+    @Test
+    public void testConsultarUserPorId() {
+        ResponseEntity<Response<UserDto>> users = restTemplate
+                .exchange("http://localhost:" + this.port + "/user/1", HttpMethod.GET, null,
+                        new ParameterizedTypeReference<Response<UserDto>>() {
+                        });
+        assertNotNull(users.getBody().getData());
+        assertEquals("02324726530", users.getBody().getData().getCpf());
+        assertEquals("test@email.com", users.getBody().getData().getEmail());
+        assertEquals(true, users.getBody().getData().getIsAdmin());
+        assertEquals("Test Testador", users.getBody().getData().getNome());
+        assertEquals(200, users.getBody().getStatusCode());
+    }
+
+    @Test
+    public void testDeletarUsers() {
+        List<UserEntity> usersList = this.userRepository.findAll();
+        Long id = usersList.get(0).getUserId();
+
+        ResponseEntity<Response<Boolean>> users = restTemplate
+                .exchange("http://localhost:" + this.port + "/user/" + id, HttpMethod.DELETE, null,
+                        new ParameterizedTypeReference<Response<Boolean>>() {
+                        });
+
+        List<UserEntity> listUserAtualizado = this.userRepository.findAll();
+
+        assertTrue(users.getBody().getData());
+        assertEquals(2, listUserAtualizado.size());
+        assertEquals(200, users.getBody().getStatusCode());
+    }
+
 //    @Test
-//    public void testConsultarUsers() {
-//        Mockito.when(this.userService.consultar(1L)).thenReturn(userDto);
+//    public void testAtualizarUsers() {
+//        List<UserEntity> usersList = this.userRepository.findAll();
+//        UserEntity user = usersList.get(0);
 //
-//        ResponseEntity<Response<UserDto>> users = restTemplate
-//                .exchange("http://localhost:" + this.port + "/user/1", HttpMethod.GET, null,
-//                        new ParameterizedTypeReference<Response<UserDto>>() {
+//        user.setNome("User de Teste");
+//
+//        HttpEntity<UserEntity> request = new HttpEntity<>(user);
+//
+//        ResponseEntity<Response<Boolean>> users = restTemplate
+//                .exchange("http://localhost:" + this.port + "/user/", HttpMethod.PUT, request,
+//                        new ParameterizedTypeReference<Response<Boolean>>() {
 //                        });
+//
+//        UserEntity userAtualizado = this.userRepository.findById(user.getUserId()).get();
+//
+//        assertTrue(users.getBody().getData());
 //        assertNotNull(users.getBody().getData());
+//        assertEquals("User de Teste", userAtualizado.getNome());
 //        assertEquals(200, users.getBody().getStatusCode());
 //    }
 
-//    @Test
-//    public void testDeletarUsers() {
-//        Mockito.when(this.userService.excluir(1L)).thenReturn(Boolean.TRUE);
-//
-//        ResponseEntity<Response<Boolean>> users = restTemplate
-//                .exchange("http://localhost:" + this.port + "/user/1", HttpMethod.DELETE, null,
-//                        new ParameterizedTypeReference<Response<Boolean>>() {
-//                        });
-//        assertNotNull(users.getBody().getData());
-//        assertEquals(200, users.getBody().getStatusCode());
-//    }
-//
-//    @Test
-//    public void testCadastrarUsers() {
-//        Mockito.when(this.userService.cadastrar(userDto)).thenReturn(Boolean.TRUE);
-//
-//        HttpEntity<UserDto> request = new HttpEntity<UserDto>(userDto);
-//
-//        ResponseEntity<Response<Boolean>> users = restTemplate
-//                .exchange("http://localhost:" + this.port + "/user/", HttpMethod.POST, request,
-//                        new ParameterizedTypeReference<Response<Boolean>>() {
-//                        });
-//        assertNotNull(users.getBody().getData());
-//        assertEquals(201, users.getBody().getStatusCode());
-//    }
+    @Test
+    public void testCadastrarUser() {
+        UserEntity user = new UserEntity();
+        //user.setUserId(1L);
+        user.setCpf("45565246016");
+        user.setEmail("test_integracao@email.com");
+        user.setIsAdmin(true);
+        user.setNome("User do Teste de Integração");
+        user.setSenha("3214");
+
+        HttpEntity<UserEntity> request = new HttpEntity<>(user);
+
+        ResponseEntity<Response<Boolean>> users = restTemplate
+                .exchange("http://localhost:" + this.port + "/user/", HttpMethod.POST, request,
+                        new ParameterizedTypeReference<Response<Boolean>>() {
+                        });
+
+        List<UserEntity> listUserAtualizado = this.userRepository.findAll();
+
+        assertTrue(users.getBody().getData());
+        assertEquals(4,listUserAtualizado.size());
+        assertEquals(201, users.getBody().getStatusCode());
+    }
 
 }
