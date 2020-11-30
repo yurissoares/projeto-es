@@ -3,8 +3,6 @@ package com.development.projetoes.service;
 import com.development.projetoes.dto.CadastroUserEventoDto;
 import com.development.projetoes.entity.CadastroUserEventoEntity;
 import com.development.projetoes.exception.CadastroUserEventoException;
-import com.development.projetoes.exception.EventoException;
-import com.development.projetoes.exception.UserException;
 import com.development.projetoes.repository.ICadastroUserEventoRepository;
 import com.development.projetoes.repository.IEventoRepository;
 import com.development.projetoes.repository.IUserRepository;

@@ -1,6 +1,8 @@
 package com.development.projetoes.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -45,7 +47,10 @@ public class UserEntity implements Serializable  {
 	@Column(name="admin")
 	private Boolean isAdmin;
 
-	@OneToMany
-	private Set<CadastroUserEventoEntity> cadastros;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "tb_user_evento",
+		joinColumns = {@JoinColumn(name = "user_id")},
+		inverseJoinColumns = {@JoinColumn(name = "evento_id")})
+	private List<EventoEntity> eventos = new ArrayList<EventoEntity>();
 	
 }

@@ -41,29 +41,29 @@ public class UserService implements IUserService {
 		}
 	}
 
-//	@Override
-//	public Boolean atualizar(UserDto user) {
-//		try {
-//			this.consultar(user.getUserId());
-//			Optional<UserEntity> userOptional = this.userRepository.findByEmail(user.getEmail());
-//			if (userOptional.isPresent() && userOptional.get().getUserId() != user.getUserId()) {
-//				throw new UserException("Esse email já existe.", HttpStatus.BAD_REQUEST);
-//			}
-//			Optional<UserEntity> userCpfOptional = this.userRepository.findByCpf(user.getCpf());
-//			if (userCpfOptional.isPresent() && userCpfOptional.get().getUserId() != user.getUserId()) {
-//				throw new UserException("Esse Cpf já existe.", HttpStatus.BAD_REQUEST);
-//			}
-//			UserEntity userEntityAtualizada = this.mapper.map(user, UserEntity.class);
-//			userEntityAtualizada.setSenha(new BCryptPasswordEncoder().encode(user.getSenha()));
-//
-//			this.userRepository.save(userEntityAtualizada);
-//			return Boolean.TRUE;
-//		} catch (UserException m) {
-//			throw m;
-//		} catch (Exception e) {
-//			throw e;
-//		}
-//	}
+	@Override
+	public Boolean atualizar(UserDto user) {
+		try {
+			this.consultar(user.getUserId());
+			Optional<UserEntity> userOptional = this.userRepository.findByEmail(user.getEmail());
+			if (userOptional.isPresent() && userOptional.get().getUserId() != user.getUserId()) {
+				throw new UserException("Esse email já existe.", HttpStatus.BAD_REQUEST);
+			}
+			Optional<UserEntity> userCpfOptional = this.userRepository.findByCpf(user.getCpf());
+			if (userCpfOptional.isPresent() && userCpfOptional.get().getUserId() != user.getUserId()) {
+				throw new UserException("Esse Cpf já existe.", HttpStatus.BAD_REQUEST);
+			}
+			UserEntity userEntityAtualizada = this.mapper.map(user, UserEntity.class);
+			userEntityAtualizada.setSenha(new BCryptPasswordEncoder().encode(user.getSenha()));
+
+			this.userRepository.save(userEntityAtualizada);
+			return Boolean.TRUE;
+		} catch (UserException m) {
+			throw m;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 
 	@Override
 	public Boolean excluir(Long userId) {

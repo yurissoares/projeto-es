@@ -6,7 +6,7 @@ import com.development.projetoes.dto.UserDto;
 
 public interface IUserService {
 
-	//public Boolean atualizar(final UserDto user);
+	public Boolean atualizar(final UserDto user);
 
 	public Boolean excluir(final Long userId);
 

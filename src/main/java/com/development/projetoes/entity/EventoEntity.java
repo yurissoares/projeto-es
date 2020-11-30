@@ -2,6 +2,8 @@ package com.development.projetoes.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -12,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.catalina.User;
 
 @Entity
 @Table(name = "tb_evento")
@@ -50,7 +53,7 @@ public class EventoEntity implements Serializable {
 	@ManyToOne
 	private UserEntity user;
 
-	@OneToMany
-	private Set<CadastroUserEventoEntity> cadastros;
+	@ManyToMany(mappedBy = "eventos", cascade = CascadeType.ALL)
+	private List<UserEntity> users = new ArrayList<UserEntity>();
 
 }

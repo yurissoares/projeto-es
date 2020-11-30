@@ -68,13 +68,13 @@ public class EventoController {
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
-//	@PutMapping
-//	//@PreAuthorize("hasRole('ADMIN')")
-//	public ResponseEntity<Response<Boolean>> atualizarEvento(@Valid @RequestBody EventoDto evento) {
-//		Response<Boolean> response = new Response<>();
-//		response.setData(this.eventoService.atualizar(evento));
-//		response.setStatusCode(HttpStatus.OK.value());
-//
-//		return ResponseEntity.status(HttpStatus.OK).body(response);
-//	}
+	@PutMapping
+	//@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<Response<Boolean>> atualizarEvento(@Valid @RequestBody EventoDto evento) {
+		Response<Boolean> response = new Response<>();
+		response.setData(this.eventoService.atualizar(evento));
+		response.setStatusCode(HttpStatus.OK.value());
+
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
 }

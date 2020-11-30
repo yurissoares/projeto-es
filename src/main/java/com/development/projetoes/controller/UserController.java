@@ -67,13 +67,13 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
-//	@PutMapping
-//	@PreAuthorize("hasRole('USER')")
-//	public ResponseEntity<Response<Boolean>> atualizarUser(@Valid @RequestBody UserDto user) {
-//		Response<Boolean> response = new Response<>();
-//		response.setData(this.userService.atualizar(user));
-//		response.setStatusCode(HttpStatus.OK.value());
-//
-//		return ResponseEntity.status(HttpStatus.OK).body(response);
-//	}
+	@PutMapping
+	//@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<Response<Boolean>> atualizarUser(@Valid @RequestBody UserDto user) {
+		Response<Boolean> response = new Response<>();
+		response.setData(this.userService.atualizar(user));
+		response.setStatusCode(HttpStatus.OK.value());
+
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
 }
